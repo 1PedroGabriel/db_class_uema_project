@@ -1,7 +1,7 @@
 package br.uema.project.project.api;
 
-import br.uema.project.project.entity.Categories;
-import br.uema.project.project.service.CategoriesService;
+import br.uema.project.project.entity.Category;
+import br.uema.project.project.service.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -14,10 +14,10 @@ import java.util.List;
 public class CategoriesController {
 
     @Autowired
-    private CategoriesService service;
+    private CategoryService service;
 
     @GetMapping("/list-all")
-    public List<Categories> listAllCategories()
+    public List<Category> listAllCategories()
     {
         return service.listAllCategories();
     }

@@ -1,0 +1,15 @@
+.hero-title {
+  font-size: 48px;
+  font-weight: 800;
+  margin-left: 32px;
+  letter-spacing: 1px;
+}
+
+.hero-subtitle {
+  font-size: 18px;
+  font-weight: 400;
+  margin-top: 6px;
+  margin-left: 32px;
+  margin-bottom: 6px;
+  opacity: 0.5;
+}

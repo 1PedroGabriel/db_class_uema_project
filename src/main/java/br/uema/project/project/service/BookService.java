@@ -1,6 +1,6 @@
 package br.uema.project.project.service;
 
-import br.uema.project.project.entity.Books;
+import br.uema.project.project.entity.Book;
 import br.uema.project.project.repository.BooksRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -15,12 +15,13 @@ public class BooksService {
     @Autowired
     private BooksRepository repository;
 
-    public List<Books> listAllBooks()
+    public List<Book> listAllBooks()
     {
         return repository.findAll();
     }
 
-    public ResponseEntity<String> addNewBook(Books newBook)
+    public List<Book>
+    public ResponseEntity<String> addNewBook(Book newBook)
     {
         try {
             repository.save(newBook);
