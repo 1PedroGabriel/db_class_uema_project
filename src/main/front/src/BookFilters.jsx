@@ -44,7 +44,7 @@ export default function BookFilters() {
       <select value={autorSelecionado} onChange={handleAutorChange} className="select-modern">
         <option value="">Escolha o autor</option>
         {autores.map((autor, idx) => (
-          <option key={idx} value={autor}>{autor}</option>
+          <option key={idx} value={autor.id}>{autor.authors}</option>
         ))}
       </select>
     </div>

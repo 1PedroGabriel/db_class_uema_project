@@ -1,6 +1,7 @@
 package br.uema.project.project.api;
 
-import br.uema.project.project.api.request.books.BooksCreateRequest;
+import br.uema.project.project.api.request.book.BooksCreateRequest;
+import br.uema.project.project.dto.book.AuthorDTO;
 import br.uema.project.project.entity.Book;
 import br.uema.project.project.entity.Staff;
 import br.uema.project.project.service.BookService;
@@ -14,8 +15,8 @@ import java.util.List;
 
 @CrossOrigin(origins = "http://localhost:5173")
 @RestController
-@RequestMapping("/books")
-public class BooksController {
+@RequestMapping("/book")
+public class BookController {
 
     @Autowired
     private BookService service;
@@ -28,6 +29,9 @@ public class BooksController {
     {
         return service.listAllBooks();
     }
+
+    @GetMapping("/author/list-all")
+    public List<AuthorDTO> listAllAuthors() { return service.listAllAuthors(); }
 
     @PostMapping("/create")
     public ResponseEntity<String> create(@RequestBody BooksCreateRequest request)

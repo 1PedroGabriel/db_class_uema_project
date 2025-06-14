@@ -13,7 +13,7 @@ import java.time.Year;
 @Data
 @Entity
 @Table(name = "books")
-public class Books {
+public class Book {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -43,6 +43,12 @@ public class Books {
 
     @Column(columnDefinition = "TEXT")
     private String summary;
+
+    @Column(name = "quantity")
+    private Short quantity;
+
+    @Column(name = "available_quantity")
+    private Short availableQuantity;
 
     @Column(name = "created_at", updatable = false)
     private LocalDateTime createdAt;

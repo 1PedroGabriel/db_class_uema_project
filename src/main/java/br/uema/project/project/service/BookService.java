@@ -1,7 +1,8 @@
 package br.uema.project.project.service;
 
+import br.uema.project.project.dto.book.AuthorDTO;
 import br.uema.project.project.entity.Book;
-import br.uema.project.project.repository.BooksRepository;
+import br.uema.project.project.repository.BookRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -10,17 +11,18 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class BooksService {
+public class BookService {
 
     @Autowired
-    private BooksRepository repository;
+    private BookRepository repository;
 
     public List<Book> listAllBooks()
     {
         return repository.findAll();
     }
 
-    public List<Book>
+    public List<AuthorDTO> listAllAuthors() { return repository.findAllAuthors(); }
+
     public ResponseEntity<String> addNewBook(Book newBook)
     {
         try {
