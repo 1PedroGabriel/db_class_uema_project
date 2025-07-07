@@ -1,6 +1,8 @@
 package br.uema.project.project.api;
 
 import br.uema.project.project.api.request.book.BooksCreateRequest;
+import br.uema.project.project.api.request.book.BooksDeleteRequest;
+import br.uema.project.project.api.request.book.BooksUpdateRequest;
 import br.uema.project.project.dto.book.AuthorDTO;
 import br.uema.project.project.entity.Book;
 import br.uema.project.project.entity.Staff;
@@ -49,4 +51,36 @@ public class BookController {
         // Caso o status code não for ok, retorna o staff service onde há as verificações
         return staffService.isCataloger(cataloger);
     }
+
+    @DeleteMapping("/delete")
+    public ResponseEntity<String> delete(@RequestBody BooksDeleteRequest request)
+    {
+        Staff cataloger = request.getCataloger();
+        Long book_id = request.getBook_id();
+
+        if(staffService.isCataloger(cataloger).getStatusCode() == HttpStatus.OK)
+        {
+            return service.deleteById(book_id);
+        }
+
+        // Caso o status code não for ok, retorna o staff service onde há as verificações
+        return staffService.isCataloger(cataloger);
+    }
+
+    @PutMapping("/update")
+    public ResponseEntity<String> update(@RequestBody BooksUpdateRequest request)
+    {
+        Staff cataloger = request.getCataloger();
+        Book book = request.getBook();
+
+
+        if(staffService.isCataloger(cataloger).getStatusCode() == HttpStatus.OK)
+        {
+            return service.updateBook(book);
+        }
+
+        // Caso o status code não for ok, retorna o staff service onde há as verificações
+        return staffService.isCataloger(cataloger);
+    }
+
 }
