@@ -1,0 +1,52 @@
+package br.uema.project.project.entity;
+
+import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import java.time.LocalDateTime;
+
+
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+@Entity
+@Table(name = "reservations")
+public class Reservation {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @Column(name = "book_id", nullable = false)
+    private Integer bookId;
+
+    @Column(name = "user_id", nullable = false)
+    private Integer userId;
+
+    @Column(name = "requested_at")
+    private LocalDateTime requestedAt;
+
+    @Column(name = "fulfilled_at")
+    private LocalDateTime fulfilledAt;
+
+    @Column(name = "cancelled_at")
+    private LocalDateTime cancelledAt;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "status", columnDefinition = "ENUM('pending', 'fulfilled', 'cancelled')")
+    private Status status;
+
+    @Column(name = "created_at", updatable = false)
+    private LocalDateTime createdAt;
+
+    @Column(name = "updated_at")
+    private LocalDateTime updatedAt;
+
+    public enum Status {
+        pending,
+        fulfilled,
+        cancelled
+    }
+
+}

@@ -65,4 +65,22 @@ public class StaffService {
         return ResponseEntity.status(HttpStatus.OK).body("O usuário é um cataloger");
     }
 
+    public ResponseEntity<String> isLibrarian(Staff staff)
+    {
+
+        if(this.login(staff.getEmail(), staff.getPasswordHash()).isEmpty())
+        {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Email e/ou senha inválido(os)!");
+        }
+
+        if(!Objects.equals(staff.getRole(), "Librarian"))
+        {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("É necessário um Librarian para realizar o registro!");
+        }
+
+        return ResponseEntity.status(HttpStatus.OK).body("O usuário é um Librarian");
+
+
+    }
+
 }

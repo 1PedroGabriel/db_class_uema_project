@@ -8,4 +8,5 @@ import lombok.Getter;
 public class BooksCreateRequest {
     private Staff cataloger;
     private Book newBook;
+
 }
