@@ -7,6 +7,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Service
 public class BookCopyService {
@@ -14,9 +15,24 @@ public class BookCopyService {
     @Autowired
     BookCopyRepository repository;
 
+    public List<BookCopy> listAllBookCopy()
+    {
+        return repository.findAll();
+    }
+
     public void addNewBookCopy(BookCopy request)
     {
-        repository.addBookCopy(request.getBookId(), request.getCopyCode() ,request.getShelfLocation() ,request.getStatus() , request.getAcquisitionDate() , request.getConditionNotes());
+        repository.save(request);
+    }
+
+    public void removeBookCopy(BookCopy request)
+    {
+        repository.deleteById(request.getId());
+    }
+
+    public void updateBookCopy(BookCopy request)
+    {
+        repository.save(request);
     }
 
 }
