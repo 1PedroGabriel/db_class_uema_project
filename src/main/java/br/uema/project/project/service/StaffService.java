@@ -1,6 +1,5 @@
 package br.uema.project.project.service;
 
-
 import br.uema.project.project.entity.Staff;
 import br.uema.project.project.repository.StaffRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,7 +9,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.util.Objects;
 import java.util.Optional;
 
 @Service
@@ -19,26 +17,24 @@ public class StaffService {
     @Autowired
     private StaffRepository repository;
 
-    @Autowired
-    private StaffRepository staffRepository;
-
     private final BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
-    public void register(String name, String email, String role, String rawPassword) {
-        Staff staff = new Staff();
-        staff.setName(name);
-        staff.setEmail(email);
-        staff.setRole(role);
-        staff.setPasswordHash(passwordEncoder.encode(rawPassword));
+    public ResponseEntity<String> register(Staff staff) {
+        if (repository.findByInstitutionalEmail(staff.getInstitutionalEmail()).isPresent()) {
+            return ResponseEntity.status(HttpStatus.CONFLICT).body("Funcionário já cadastrado!");
+        }
+
+        staff.setPasswordHash(passwordEncoder.encode(staff.getPasswordHash()));
         staff.setActive(true);
         staff.setCreatedAt(LocalDateTime.now());
         staff.setUpdatedAt(LocalDateTime.now());
 
         repository.save(staff);
+        return ResponseEntity.ok("Funcionário cadastrado com sucesso!");
     }
 
-    public Optional<Staff> login(String email, String rawPassword) {
-        Optional<Staff> staffOpt = repository.findByEmail(email);
+    public Optional<Staff> login(String institutionalEmail, String rawPassword) {
+        Optional<Staff> staffOpt = repository.findByInstitutionalEmail(institutionalEmail);
 
         if (staffOpt.isPresent()) {
             Staff staff = staffOpt.get();
@@ -46,41 +42,23 @@ public class StaffService {
                 return Optional.of(staff);
             }
         }
-
-        return Optional.empty(); // Ou lançar uma exceção se preferir
+        return Optional.empty();
     }
 
-    public ResponseEntity<String> isCataloger(Staff staff)
-    {
-        if(this.login(staff.getEmail(), staff.getPasswordHash()).isEmpty())
-        {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Email e/ou senha inválido(os)!");
-        }
-
-        if(!Objects.equals(staff.getRole(), "Cataloger"))
-        {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("É necessário um Cataloger para realizar o registro!");
-        }
-
-        return ResponseEntity.status(HttpStatus.OK).body("O usuário é um cataloger");
+    public boolean hasPosition(String email, String password, String expectedPosition) {
+        Optional<Staff> staff = login(email, password);
+        return staff.map(s -> expectedPosition.equalsIgnoreCase(s.getPosition())).orElse(false);
     }
 
-    public ResponseEntity<String> isLibrarian(Staff staff)
-    {
-
-        if(this.login(staff.getEmail(), staff.getPasswordHash()).isEmpty())
-        {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Email e/ou senha inválido(os)!");
-        }
-
-        if(!Objects.equals(staff.getRole(), "Librarian"))
-        {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("É necessário um Librarian para realizar o registro!");
-        }
-
-        return ResponseEntity.status(HttpStatus.OK).body("O usuário é um Librarian");
-
-
+    public ResponseEntity<String> isLibrarian(Staff staff) {
+        return hasPosition(staff.getInstitutionalEmail(), staff.getPasswordHash(), "Bibliotecário")
+                ? ResponseEntity.ok("Usuário autorizado como Bibliotecário.")
+                : ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Acesso negado: função necessária 'Bibliotecário'.");
     }
 
+    public ResponseEntity<String> isCataloger(Staff staff) {
+        return hasPosition(staff.getInstitutionalEmail(), staff.getPasswordHash(), "Catalogador")
+                ? ResponseEntity.ok("Usuário autorizado como Catalogador.")
+                : ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Acesso negado: função necessária 'Catalogador'.");
+    }
 }
