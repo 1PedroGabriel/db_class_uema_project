@@ -1,0 +1,23 @@
+.book-filters-container {
+  display: flex;
+  gap: 16px;
+  margin: 20px;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.select-modern {
+  padding: 10px 14px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background-color: #f9f9f9;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: border-color 0.2s ease;
+  min-width: 200px;
+}
+
+.select-modern:focus {
+  outline: none;
+  border-color: #007bff;
+}

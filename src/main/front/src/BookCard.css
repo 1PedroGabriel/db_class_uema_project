@@ -1,0 +1,91 @@
+.styled-book-card {
+  width: 300px;
+  background: white;
+  border: 1px solid #eee;
+  border-radius: 12px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.06);
+  transition: transform 0.2s ease;
+}
+
+.styled-book-card:hover {
+  transform: translateY(-4px);
+}
+
+.image-placeholder {
+  background-color: #eee;
+  height: 180px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.book-card-body {
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.book-card-title {
+  font-size: 18px;
+  font-weight: bold;
+  margin: 0;
+}
+
+.book-card-author {
+  font-size: 14px;
+  color: #555;
+  margin: 0;
+}
+
+.book-card-publisher,
+.book-card-language,
+.book-card-summary {
+  font-size: 13px;
+  color: #666;
+  margin: 2px 0;
+}
+
+.book-card-summary {
+  font-style: italic;
+}
+
+.book-card-buttons {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 12px;
+}
+
+.outline-button,
+.primary-button {
+  padding: 8px 12px;
+  font-size: 14px;
+  border-radius: 6px;
+  cursor: pointer;
+  border: none;
+}
+
+.outline-button {
+  background-color: white;
+  border: 1px solid #ccc;
+  color: #333;
+}
+
+.primary-button {
+  background-color: black;
+  color: white;
+}
+
+.book-card-available {
+  display: flex;
+  justify-content: space-between; /* espaço entre os <p> */
+  align-items: center; /* alinha verticalmente */
+}
+
+.book-card-available p {
+  margin: 0; /* remove margens padrão */
+}
+
