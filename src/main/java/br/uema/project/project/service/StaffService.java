@@ -51,13 +51,13 @@ public class StaffService {
     }
 
     public ResponseEntity<String> isLibrarian(Staff staff) {
-        return hasPosition(staff.getInstitutionalEmail(), staff.getPasswordHash(), "Bibliotecário")
+        return hasPosition(staff.getInstitutionalEmail(), staff.getPasswordHash(), "Librarian")
                 ? ResponseEntity.ok("Usuário autorizado como Bibliotecário.")
                 : ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Acesso negado: função necessária 'Bibliotecário'.");
     }
 
     public ResponseEntity<String> isCataloger(Staff staff) {
-        return hasPosition(staff.getInstitutionalEmail(), staff.getPasswordHash(), "Catalogador")
+        return hasPosition(staff.getInstitutionalEmail(), staff.getPasswordHash(), "Cataloger")
                 ? ResponseEntity.ok("Usuário autorizado como Catalogador.")
                 : ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Acesso negado: função necessária 'Catalogador'.");
     }
