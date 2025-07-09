@@ -4,7 +4,6 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
 import java.time.LocalDateTime;
 import java.time.Year;
 
@@ -33,7 +32,7 @@ public class Book {
     private String publisher;
 
     @Column(name = "publication_year")
-    private Year publicationYear;
+    private Integer publicationYear;
 
     private String edition;
 
@@ -50,11 +49,16 @@ public class Book {
     @Column(name = "available_quantity")
     private Short availableQuantity;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "category_id", nullable = true)
+    private Category category;
+
     @Column(name = "created_at", updatable = false)
     private LocalDateTime createdAt;
 
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
+
 
     @PrePersist
     public void prePersist() {

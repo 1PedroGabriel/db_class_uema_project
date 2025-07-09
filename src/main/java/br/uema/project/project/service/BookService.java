@@ -5,9 +5,11 @@ import br.uema.project.project.entity.Book;
 import br.uema.project.project.repository.BookRepository;
 import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.*;
 
@@ -28,6 +30,15 @@ public class BookService {
     }
     public List<AuthorDTO> listAllAuthors() { return repository.findAllAuthors(); }
 
+    public List<Book> filterBooks(Long categoryId,
+                                  String author,
+                                  Integer year,
+                                  Integer minPages,
+                                  Integer maxPages,
+                                  Boolean available)
+    {
+        return repository.findByFilters(categoryId, author, year, minPages, maxPages, available);
+    }
 
     public ResponseEntity<String> addNewBook(Book newBook)
     {
