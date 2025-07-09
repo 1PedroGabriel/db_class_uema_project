@@ -7,5 +7,5 @@ import lombok.Getter;
 @Getter
 public class BooksUpdateRequest {
     private Staff cataloger;
-    private Book Book;
+    private Book book;
 }

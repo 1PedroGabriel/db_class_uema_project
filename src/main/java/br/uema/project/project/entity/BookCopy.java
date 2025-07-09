@@ -30,8 +30,9 @@ public class BookCopy {
     @Column(name = "shelf_location")
     private String shelfLocation;
 
+    @Enumerated(EnumType.STRING)
     @Column(name = "status")
-    private String status;
+    private BookCopyStatus status;
 
     @Column(name = "acquisition_date")
     private LocalDate acquisitionDate;
@@ -44,5 +45,13 @@ public class BookCopy {
 
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
+
+    public enum BookCopyStatus {
+        available,
+        borrowed,
+        reserved,
+        lost,
+        maintenance
+    }
 
 }
