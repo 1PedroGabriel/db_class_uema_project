@@ -11,4 +11,8 @@ public interface BookRepository extends JpaRepository<Book, Long> {
 
     @Query("SELECT b.id, b.authors FROM Book b")
     List<AuthorDTO> findAllAuthors();
+
+    // Lista os livros que não estão com quantidade disponivel.
+    @Query("SELECT b FROM Book b WHERE b.availableQuantity = 0")
+    List<Book> listAllOutOfStock();
 }

@@ -22,11 +22,18 @@ public class BookService {
         return repository.findAll();
     }
 
+    public List<Book> listAllOutOfStockBooks()
+    {
+        return repository.listAllOutOfStock();
+    }
     public List<AuthorDTO> listAllAuthors() { return repository.findAllAuthors(); }
+
 
     public ResponseEntity<String> addNewBook(Book newBook)
     {
         try {
+            newBook.setQuantity((short) 0);
+            newBook.setAvailableQuantity((short) 0);
             repository.save(newBook);
         } catch (Exception exception) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Não foi possível adicionar o pois a requisição não foi bem feita!");

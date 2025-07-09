@@ -32,6 +32,12 @@ public class BookController {
         return service.listAllBooks();
     }
 
+    @GetMapping("/out-of-stock/list-all")
+    public List<Book> listAllOutOfStockBooks()
+    {
+        return service.listAllOutOfStockBooks();
+    }
+
     @GetMapping("/author/list-all")
     public List<AuthorDTO> listAllAuthors() { return service.listAllAuthors(); }
 
@@ -82,5 +88,7 @@ public class BookController {
         // Caso o status code não for ok, retorna o staff service onde há as verificações
         return staffService.isCataloger(cataloger);
     }
+
+
 
 }
