@@ -8,12 +8,18 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class BookCopyService {
 
     @Autowired
     BookCopyRepository repository;
+
+    public Optional<BookCopy> findById(Long id)
+    {
+        return repository.findById(id);
+    }
 
     public List<BookCopy> listAllBookCopy()
     {
@@ -32,7 +38,9 @@ public class BookCopyService {
 
     public void updateBookCopy(BookCopy request)
     {
-        repository.save(request);
+
+        repository.updateFields(request.getId(), request.getStatus(), request.getShelfLocation());
     }
+
 
 }

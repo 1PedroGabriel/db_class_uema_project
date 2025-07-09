@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 
 @CrossOrigin(origins = "http://localhost:5173")
@@ -47,5 +48,29 @@ public class BookCopyController {
         }
 
         return ResponseEntity.ok("Livro removido com sucesso");
+    }
+
+    @PatchMapping("/update")
+    public ResponseEntity<String> update(@RequestBody BookCopy request)
+    {
+        try {
+
+            Optional<BookCopy> book = service.findById(request.getId());
+
+            if (book.isEmpty()) {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("O livro não foi encontrado");
+            } else {
+                BookCopy currentBook = book.get();
+                currentBook.setStatus(request.getStatus());
+                currentBook.setConditionNotes(request.getConditionNotes());
+
+                service.updateBookCopy(currentBook);
+            }
+
+        } catch (Exception exception) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Há algum erro na requisição!");
+        }
+
+        return ResponseEntity.ok("atualização feita com sucesso");
     }
 }
