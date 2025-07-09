@@ -41,6 +41,18 @@ public class BookController {
     @GetMapping("/author/list-all")
     public List<AuthorDTO> listAllAuthors() { return service.listAllAuthors(); }
 
+    @GetMapping("/report")
+    public List<Book> getFilteredBooks(
+            @RequestParam(required = false) Long categoryId,
+            @RequestParam(required = false) String author,
+            @RequestParam(required = false) Integer year,
+            @RequestParam(required = false) Integer minPages,
+            @RequestParam(required = false) Integer maxPages,
+            @RequestParam(required = false) Boolean available
+    ) {
+        return service.filterBooks(categoryId, author, year, minPages, maxPages, available);
+    }
+
     @PostMapping("/create")
     public ResponseEntity<String> create(@RequestBody BooksCreateRequest request)
     {
