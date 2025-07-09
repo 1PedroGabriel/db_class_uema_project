@@ -2,14 +2,12 @@ package br.uema.project.project.api;
 
 import br.uema.project.project.api.request.staff.StaffCreateRequest;
 import br.uema.project.project.entity.Staff;
-import br.uema.project.project.repository.StaffRepository;
 import br.uema.project.project.service.StaffService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Objects;
 import java.util.Optional;
 
 @RestController
@@ -19,35 +17,28 @@ public class StaffController {
     @Autowired
     private StaffService service;
 
-    @Autowired
-    private StaffRepository repository;
+    @PostMapping("/login")
+    public ResponseEntity<?> login(@RequestBody Staff staff) {
+        Optional<Staff> logged = service.login(staff.getInstitutionalEmail(), staff.getPasswordHash());
 
-    @GetMapping("/login")
-    public Optional<Staff> login(@RequestBody Staff staff)
-    {
-        return service.login(staff.getEmail(), staff.getPasswordHash());
+        return logged.isPresent()
+                ? ResponseEntity.ok(logged.get())
+                : ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Credenciais inválidas.");
     }
 
     @PostMapping("/create")
-    public ResponseEntity<String> create(@RequestBody StaffCreateRequest request)
-    {
-        Staff new_staff = request.getNewStaff();
-        Staff admin_staff = request.getAdminStaff();
+    public ResponseEntity<String> create(@RequestBody StaffCreateRequest request) {
+        Staff newStaff = request.getNewStaff();
+        Staff adminStaff = request.getAdminStaff();
 
-        Optional<Staff> staff = this.login(admin_staff);
-        if(staff.isPresent() && Objects.equals(staff.get().getRole(), "Admin")) {
-
-            if(repository.findByEmail(new_staff.getEmail()).isPresent())
-            {
-                return ResponseEntity.status(HttpStatus.CONFLICT).body("Usuário já existe!");
-            }
-
-            service.register(new_staff.getName(), new_staff.getEmail(), new_staff.getRole(), new_staff.getPasswordHash());
-
-            return ResponseEntity.ok("Usuário cadastrado com sucesso!");
+        if (adminStaff == null) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Dados do administrador são obrigatórios.");
         }
 
-        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Credenciais Inválidas!");
-    }
+        if (!service.hasPosition(adminStaff.getInstitutionalEmail(), adminStaff.getPasswordHash(), "Administrador")) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Apenas administradores podem cadastrar funcionários.");
+        }
 
+        return service.register(newStaff);
+    }
 }

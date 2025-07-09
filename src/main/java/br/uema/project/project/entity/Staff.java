@@ -1,13 +1,11 @@
 package br.uema.project.project.entity;
 
-
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
-
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -23,11 +21,11 @@ public class Staff {
     @Column(length = 255, nullable = false)
     private String name;
 
-    @Column(length = 100, nullable = false, unique = true)
-    private String email;
+    @Column(name = "institutional_email", length = 100, nullable = false, unique = true)
+    private String institutionalEmail;
 
-    @Column(length = 100)
-    private String role;
+    @Column(length = 100, nullable = false)
+    private String position; // ex: Bibliotecário, Auxiliar
 
     @Column(name = "password_hash", nullable = false, length = 255)
     private String passwordHash;
@@ -40,5 +38,4 @@ public class Staff {
 
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
-
 }
