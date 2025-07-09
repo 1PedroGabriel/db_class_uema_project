@@ -52,12 +52,13 @@ public class StaffService {
 
     public ResponseEntity<String> isCataloger(Staff staff)
     {
-        if(this.login(staff.getEmail(), staff.getPasswordHash()).isEmpty())
+        Optional<Staff> cataloger = this.login(staff.getEmail(), staff.getPasswordHash());
+        if(cataloger.isEmpty())
         {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Email e/ou senha inválido(os)!");
         }
 
-        if(!Objects.equals(staff.getRole(), "Cataloger"))
+        if(!Objects.equals(cataloger.get().getRole(), "Cataloger"))
         {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("É necessário um Cataloger para realizar o registro!");
         }
