@@ -82,5 +82,10 @@ public class StaffService {
 
 
     }
+    // no StaffService
+    public boolean isLibrarianBoolean(Staff staff) {
+    // sem autenticar a senha, só checando role
+    return staff != null && "Librarian".equals(staff.getRole());
+    }
 
 }
