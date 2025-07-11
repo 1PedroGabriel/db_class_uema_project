@@ -29,6 +29,7 @@ public class StaffService {
         staff.setUpdatedAt(LocalDateTime.now());
 
         repository.save(staff);
+        return ResponseEntity.ok("Usuário registrado como " + staff.getRole() + ".");
     }
 
     public Optional<Staff> login(String email, String rawPassword) {
