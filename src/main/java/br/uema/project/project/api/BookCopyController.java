@@ -1,7 +1,10 @@
 package br.uema.project.project.api;
 
+import br.uema.project.project.entity.Book;
 import br.uema.project.project.entity.BookCopy;
 import br.uema.project.project.service.BookCopyService;
+import br.uema.project.project.service.BookService;
+import org.apache.coyote.Request;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -25,17 +28,32 @@ public class BookCopyController {
         return service.listAllBookCopy();
     }
 
+    @GetMapping("/report")
+    public List<BookCopy> getFilteredBooksCopy(
+            @RequestParam(required = false) Long categoryId,
+            @RequestParam(required = false) String author,
+            @RequestParam(required = false) Integer year,
+            @RequestParam(required = false) Integer minPages,
+            @RequestParam(required = false) Integer maxPages,
+            @RequestParam(required = false) String shelfLocation,
+            @RequestParam(required = false) BookCopy.BookCopyStatus status,
+            @RequestParam(required = false) String copyCode)
+    {
+        return service.filterBooksCopy(categoryId, author, year, minPages, maxPages, shelfLocation, status, copyCode);
+    }
+
     @PostMapping("/create")
     public ResponseEntity<String> create(@RequestBody BookCopy request)
     {
         try {
+
+            // Aciona Trigger para alterar automaticamente o campo quantity e available quantity
             service.addNewBookCopy(request);
         } catch (Exception exception) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Há algum erro na requisição!");
         }
 
         return ResponseEntity.ok("Livro adicionado com sucesso");
-
     }
 
     @DeleteMapping("/delete")
@@ -70,7 +88,6 @@ public class BookCopyController {
         } catch (Exception exception) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Há algum erro na requisição!");
         }
-
         return ResponseEntity.ok("atualização feita com sucesso");
     }
 }

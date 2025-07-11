@@ -56,7 +56,6 @@ public class BookController {
     @PostMapping("/create")
     public ResponseEntity<String> create(@RequestBody BooksCreateRequest request)
     {
-
         Staff cataloger = request.getCataloger();
         Book newBook = request.getNewBook();
 
@@ -100,7 +99,4 @@ public class BookController {
         // Caso o status code não for ok, retorna o staff service onde há as verificações
         return staffService.isCataloger(cataloger);
     }
-
-
-
 }

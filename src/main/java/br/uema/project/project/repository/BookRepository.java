@@ -18,7 +18,7 @@ public interface BookRepository extends JpaRepository<Book, Long> {
     List<Book> listAllOutOfStock();
 
     @Query("SELECT b FROM Book b WHERE "
-            + "(:categoryId IS NULL OR b.category.id = :categoryId) AND "
+            + "(:categoryId IS NULL OR b.categoryId = :categoryId) AND "
             + "(:author IS NULL OR LOWER(b.authors) LIKE LOWER(CONCAT('%', :author, '%'))) AND "
             + "(:year IS NULL OR b.publicationYear = :year) AND "
             + "(:minPages IS NULL OR b.pages >= :minPages) AND "

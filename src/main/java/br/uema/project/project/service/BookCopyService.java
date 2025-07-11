@@ -5,6 +5,7 @@ import br.uema.project.project.repository.BookCopyRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -26,6 +27,17 @@ public class BookCopyService {
         return repository.findAll();
     }
 
+    public List<BookCopy> filterBooksCopy( Long categoryId,
+                                           String author,
+                                           Integer year,
+                                           Integer minPages,
+                                           Integer maxPages,
+                                           String shelfLocation,
+                                           BookCopy.BookCopyStatus status,
+                                           String copyCode)
+    {
+        return repository.findByFilters(categoryId, author, year, minPages, maxPages, shelfLocation, status, copyCode);
+    }
     public void addNewBookCopy(BookCopy request)
     {
         repository.save(request);
@@ -41,6 +53,8 @@ public class BookCopyService {
 
         repository.updateFields(request.getId(), request.getStatus(), request.getShelfLocation());
     }
+
+
 
 
 }

@@ -20,7 +20,7 @@ public class StaffService {
     private final BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
     public ResponseEntity<String> register(Staff staff) {
-        if (repository.findByInstitutionalEmail(staff.getInstitutionalEmail()).isPresent()) {
+        if (repository.findByEmail(staff.getEmail()).isPresent()) {
             return ResponseEntity.status(HttpStatus.CONFLICT).body("Funcionário já cadastrado!");
         }
 
@@ -34,7 +34,7 @@ public class StaffService {
     }
 
     public Optional<Staff> login(String institutionalEmail, String rawPassword) {
-        Optional<Staff> staffOpt = repository.findByInstitutionalEmail(institutionalEmail);
+        Optional<Staff> staffOpt = repository.findByEmail(institutionalEmail);
 
         if (staffOpt.isPresent()) {
             Staff staff = staffOpt.get();
@@ -45,19 +45,19 @@ public class StaffService {
         return Optional.empty();
     }
 
-    public boolean hasPosition(String email, String password, String expectedPosition) {
+    public boolean hasRole(String email, String password, String expectedRole) {
         Optional<Staff> staff = login(email, password);
-        return staff.map(s -> expectedPosition.equalsIgnoreCase(s.getPosition())).orElse(false);
+        return staff.map(s -> expectedRole.equalsIgnoreCase(s.getRole())).orElse(false);
     }
 
     public ResponseEntity<String> isLibrarian(Staff staff) {
-        return hasPosition(staff.getInstitutionalEmail(), staff.getPasswordHash(), "Librarian")
+        return hasRole(staff.getEmail(), staff.getPasswordHash(), "Librarian")
                 ? ResponseEntity.ok("Usuário autorizado como Bibliotecário.")
                 : ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Acesso negado: função necessária 'Bibliotecário'.");
     }
 
     public ResponseEntity<String> isCataloger(Staff staff) {
-        return hasPosition(staff.getInstitutionalEmail(), staff.getPasswordHash(), "Cataloger")
+        return hasRole(staff.getEmail(), staff.getPasswordHash(), "Cataloger")
                 ? ResponseEntity.ok("Usuário autorizado como Catalogador.")
                 : ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Acesso negado: função necessária 'Catalogador'.");
     }

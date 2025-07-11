@@ -49,9 +49,8 @@ public class Book {
     @Column(name = "available_quantity")
     private Short availableQuantity;
 
-    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "category_id", nullable = true)
-    private Category category;
+    private Long categoryId;
 
     @Column(name = "created_at", updatable = false)
     private LocalDateTime createdAt;

@@ -19,7 +19,7 @@ public class StaffController {
 
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody Staff staff) {
-        Optional<Staff> logged = service.login(staff.getInstitutionalEmail(), staff.getPasswordHash());
+        Optional<Staff> logged = service.login(staff.getEmail(), staff.getPasswordHash());
 
         return logged.isPresent()
                 ? ResponseEntity.ok(logged.get())
@@ -35,7 +35,7 @@ public class StaffController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Dados do administrador são obrigatórios.");
         }
 
-        if (!service.hasPosition(adminStaff.getInstitutionalEmail(), adminStaff.getPasswordHash(), "Administrador")) {
+        if (!service.hasRole(adminStaff.getEmail(), adminStaff.getPasswordHash(), "Administrador")) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Apenas administradores podem cadastrar funcionários.");
         }
 
