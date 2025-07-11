@@ -1,4 +1,4 @@
-package br.uema.project.project.dto;
+package br.uema.project.project.dto.reservation;
 
 import java.time.LocalDate;
 

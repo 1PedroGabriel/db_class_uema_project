@@ -20,9 +20,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.uema.project.project.dto.PendingReservationDTO;
-import br.uema.project.project.service.ReservationService;
-
 @RestController
 @RequestMapping("/reservation")
 public class ReservationController {
