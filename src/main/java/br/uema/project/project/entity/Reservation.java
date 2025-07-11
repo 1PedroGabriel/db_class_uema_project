@@ -4,8 +4,8 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import java.time.LocalDateTime;
 
+import java.time.LocalDateTime;
 
 @Data
 @AllArgsConstructor
@@ -42,6 +42,13 @@ public class Reservation {
 
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
+
+    // ➕ Novos campos para período da reserva
+    @Column(name = "start_date", nullable = false)
+    private LocalDateTime startDate;
+
+    @Column(name = "end_date", nullable = false)
+    private LocalDateTime endDate;
 
     public enum Status {
         pending,

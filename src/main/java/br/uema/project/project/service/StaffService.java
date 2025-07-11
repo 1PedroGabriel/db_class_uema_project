@@ -29,11 +29,10 @@ public class StaffService {
         staff.setUpdatedAt(LocalDateTime.now());
 
         repository.save(staff);
-        return ResponseEntity.ok("Funcionário cadastrado com sucesso!");
     }
 
-    public Optional<Staff> login(String institutionalEmail, String rawPassword) {
-        Optional<Staff> staffOpt = repository.findByEmail(institutionalEmail);
+    public Optional<Staff> login(String email, String rawPassword) {
+        Optional<Staff> staffOpt = repository.findByEmail(email);
 
         if (staffOpt.isPresent()) {
             Staff staff = staffOpt.get();
@@ -41,7 +40,8 @@ public class StaffService {
                 return Optional.of(staff);
             }
         }
-        return Optional.empty();
+
+        return Optional.empty(); // Ou lançar uma exceção se preferir
     }
 
     public boolean hasRole(String email, String password, String expectedRole) {
@@ -60,4 +60,10 @@ public class StaffService {
                 ? ResponseEntity.ok("Usuário autorizado como Catalogador.")
                 : ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Acesso negado: função necessária 'Catalogador'.");
     }
+    // no StaffService
+    public boolean isLibrarianBoolean(Staff staff) {
+    // sem autenticar a senha, só checando role
+    return staff != null && "Librarian".equals(staff.getRole());
+    }
+
 }
