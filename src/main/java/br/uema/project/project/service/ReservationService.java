@@ -1,8 +1,8 @@
 package br.uema.project.project.service;
 
 import br.uema.project.project.api.request.reservation.ReservationsCreateRequest;
+import br.uema.project.project.dto.reservation.PendingReservationDTO;
 import br.uema.project.project.entity.Reservation;
-import br.uema.project.project.entity.Staff;
 import br.uema.project.project.repository.ReservationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -90,6 +90,9 @@ public class ReservationService {
         }
     }
 
+    public List<PendingReservationDTO> getPendingReservationsReport() {
+        return repository.findPendingReservations();
+    }
     // Mantém seu método antigo (exemplo simples)
     private boolean isBookAvailable(Integer bookId, LocalDateTime start, LocalDateTime end) {
         // TODO: implemente a lógica real
