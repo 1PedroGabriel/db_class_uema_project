@@ -3,6 +3,7 @@ package br.uema.project.project.api;
 import br.uema.project.project.api.request.reservation.ReservationsCreateRequest;
 import br.uema.project.project.api.request.reservation.ReservationsDeleteRequest;
 import br.uema.project.project.api.request.reservation.ReservationsUpdateRequest;
+import br.uema.project.project.dto.reservation.PendingReservationDTO;
 import br.uema.project.project.entity.Reservation;
 import br.uema.project.project.entity.Staff;
 import br.uema.project.project.service.ReservationService;
@@ -33,6 +34,11 @@ public class ReservationController {
     @GetMapping("/list-all")
     public List<Reservation> listAllReservations() {
         return service.listAllReservations();
+    }
+
+    @GetMapping("/pending/list-all")
+    public List<PendingReservationDTO> getPendingReservations() {
+        return service.getPendingReservationsReport();
     }
 
     @PostMapping("/create")

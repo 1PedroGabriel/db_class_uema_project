@@ -1,28 +1,21 @@
 package br.uema.project.project.dto.reservation;
 
-import java.time.LocalDate;
+import lombok.Getter;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+
+@Getter
 public class PendingReservationDTO {
 
-    private String userName;
-    private String bookTitle;
-    private LocalDate reservationDate;
+    private final Long userId;
+    private final Long bookId;
+    private final LocalDateTime startDate;
 
-    public PendingReservationDTO(String userName, String bookTitle, LocalDate reservationDate) {
-        this.userName = userName;
-        this.bookTitle = bookTitle;
-        this.reservationDate = reservationDate;
+    public PendingReservationDTO(Long userId, Long bookTitle, LocalDateTime startDate) {
+        this.userId = userId;
+        this.bookId = bookTitle;
+        this.startDate = startDate;
     }
 
-    public String getUserName() {
-        return userName;
-    }
-
-    public String getBookTitle() {
-        return bookTitle;
-    }
-
-    public LocalDate getReservationDate() {
-        return reservationDate;
-    }
 }

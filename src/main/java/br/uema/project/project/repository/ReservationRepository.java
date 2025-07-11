@@ -16,7 +16,7 @@ public interface ReservationRepository extends JpaRepository<Reservation, Long> 
         LocalDateTime startDate,
         LocalDateTime endDate
     );
-    @Query("SELECT new PendingReservationDTO(r.user.name, r.book.title, r.reservationDate) " +
+    @Query("SELECT r.userId, r.bookId, r.startDate " +
            "FROM Reservation r WHERE r.status = 'pending'")
     List<PendingReservationDTO> findPendingReservations();
 
