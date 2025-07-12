@@ -89,6 +89,9 @@ public class ReservationService {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Erro ao criar reserva!");
         }
     }
+    public List<OpenReservationsReport> getOpenReservationsReport() {
+    return repository.findOpenReservationsReport();
+}
 
     public List<PendingReservationDTO> getPendingReservationsReport() {
         return repository.findPendingReservations();
