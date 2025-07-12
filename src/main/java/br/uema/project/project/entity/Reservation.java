@@ -21,10 +21,10 @@ public class Reservation {
     private Long id;
 
     @Column(name = "book_id", nullable = false)
-    private Integer bookId;
+    private Long bookId;
 
     @Column(name = "user_id", nullable = false)
-    private Integer userId;
+    private Long userId;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "book_id", insertable = false, updatable = false)

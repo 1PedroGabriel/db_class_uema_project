@@ -1,5 +1,6 @@
 package br.uema.project.project.service;
 
+import br.uema.project.project.api.request.reservation.OpenReservationsReport;
 import br.uema.project.project.api.request.reservation.ReservationsCreateRequest;
 import br.uema.project.project.dto.reservation.PendingReservationDTO;
 import br.uema.project.project.entity.Reservation;
