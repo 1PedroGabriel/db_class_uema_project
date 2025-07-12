@@ -4,8 +4,9 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import java.time.LocalDateTime;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Data
 @AllArgsConstructor
@@ -24,6 +25,14 @@ public class Reservation {
     @Column(name = "user_id", nullable = false)
     private Integer userId;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "book_id", insertable = false, updatable = false)
+    private Book book;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id", insertable = false, updatable = false)
+    private User user;
+
     @Column(name = "requested_at")
     private LocalDateTime requestedAt;
 
@@ -32,6 +41,9 @@ public class Reservation {
 
     @Column(name = "cancelled_at")
     private LocalDateTime cancelledAt;
+
+    @Column(name = "expected_Date")
+    private LocalDate expectedDate;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "status", columnDefinition = "ENUM('pending', 'fulfilled', 'cancelled')")

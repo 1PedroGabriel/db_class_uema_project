@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import br.uema.project.project.api.request.reservation.OpenReservationsReport;
 
 import java.util.List;
 
@@ -54,5 +55,8 @@ public class ReservationService {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Não foi encontrado!");
     }
 
+    public List<OpenReservationsReport> getOpenReservationsReport() {
+    return repository.findOpenReservationsReport();
+}
 
 }

@@ -1,6 +1,7 @@
 package br.uema.project.project.api;
 
 
+import br.uema.project.project.api.request.reservation.OpenReservationsReport;
 import br.uema.project.project.api.request.reservation.ReservationsCreateRequest;
 import br.uema.project.project.api.request.reservation.ReservationsDeleteRequest;
 import br.uema.project.project.api.request.reservation.ReservationsUpdateRequest;
@@ -76,4 +77,9 @@ public class ReservationController {
 
 
     }
+
+    @GetMapping("/report/open")
+    public List<OpenReservationsReport> getOpenReservationsReport() {
+        return service.getOpenReservationsReport();
+}
 }
