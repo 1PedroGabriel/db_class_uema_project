@@ -6,7 +6,7 @@ Este projeto utiliza um banco de dados MySQL para gerenciar livros, cópias, emp
 
 ## 🔽 Como importar o banco (dump)
 
-1. Baixe o arquivo `backup.sql` deste repositório ou outro link fornecido.
+1. Baixe o arquivo `backup.sql` 
 2. Abra o **MySQL Workbench**.
 3. Vá em **Server > Data Import**.
 4. Selecione **Import from Self-Contained File** e aponte para o `backup.sql`.
