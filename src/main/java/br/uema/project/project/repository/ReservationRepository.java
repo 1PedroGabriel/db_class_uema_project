@@ -10,19 +10,19 @@ import java.util.List;
 
 public interface ReservationRepository extends JpaRepository<Reservation, Long> {
 
-    // Seu método antigo mantido
     List<Reservation> findByBookIdAndEndDateAfterAndStartDateBefore(
         Integer bookId,
         LocalDateTime startDate,
         LocalDateTime endDate
     );
+
     @Query("SELECT r.userId, r.bookId, r.startDate " +
            "FROM Reservation r WHERE r.status = 'pending'")
     List<PendingReservationDTO> findPendingReservations();
 
     // Novo método com filtro por status
     List<Reservation> findByBookIdAndStatusInAndEndDateAfterAndStartDateBefore(
-        Integer bookId,
+        Long bookId,
         List<Reservation.Status> statuses,
         LocalDateTime startDate,
         LocalDateTime endDate
@@ -30,7 +30,7 @@ public interface ReservationRepository extends JpaRepository<Reservation, Long> 
 
     // Para fila cronológica
     List<Reservation> findByBookIdAndStatusOrderByRequestedAtAsc(
-        Integer bookId,
+        Long bookId,
         Reservation.Status status
     );
 }

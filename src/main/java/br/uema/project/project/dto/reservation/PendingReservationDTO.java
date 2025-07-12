@@ -8,9 +8,9 @@ import java.time.LocalDateTime;
 @Getter
 public class PendingReservationDTO {
 
-    private final Long userId;
-    private final Long bookId;
-    private final LocalDateTime startDate;
+    private Long userId;
+    private Long bookId;
+    private LocalDateTime startDate;
 
     public PendingReservationDTO(Long userId, Long bookTitle, LocalDateTime startDate) {
         this.userId = userId;

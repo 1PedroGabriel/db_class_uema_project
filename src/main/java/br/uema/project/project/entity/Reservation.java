@@ -19,10 +19,10 @@ public class Reservation {
     private Long id;
 
     @Column(name = "book_id", nullable = false)
-    private Integer bookId;
+    private Long bookId;
 
     @Column(name = "user_id", nullable = false)
-    private Integer userId;
+    private Long userId;
 
     @Column(name = "requested_at")
     private LocalDateTime requestedAt;

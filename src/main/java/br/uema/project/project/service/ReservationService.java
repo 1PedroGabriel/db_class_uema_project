@@ -93,9 +93,9 @@ public class ReservationService {
     public List<PendingReservationDTO> getPendingReservationsReport() {
         return repository.findPendingReservations();
     }
-    // Mantém seu método antigo (exemplo simples)
-    private boolean isBookAvailable(Integer bookId, LocalDateTime start, LocalDateTime end) {
-        // TODO: implemente a lógica real
+
+    private boolean isBookAvailable(Long bookId, LocalDateTime start, LocalDateTime end) {
+
         return false; // falso para simular indisponibilidade e permitir reserva
     }
 }

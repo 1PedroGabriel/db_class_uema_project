@@ -15,10 +15,10 @@ public class ReservationsCreateRequest {
 
     // ➕ Campos novos para o período de reserva
     @NotNull(message = "bookId é obrigatório")
-    private Integer bookId;
+    private Long bookId;
 
     @NotNull(message = "userId é obrigatório")
-    private Integer userId;
+    private Long userId;
 
     @NotNull(message = "startDate é obrigatório")
     private LocalDateTime startDate;
